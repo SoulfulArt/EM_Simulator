@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EM Simulator - {{ProgramSession}}</title>
+
+    <link rel="stylesheet" type="text/css"  href="{% static 'bootstrap.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'font-awesome/css/font-awesome.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'local.css' %}" />
+
+    <script type="text/javascript" src="{% static 'js/jquery-1.10.2.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bootstrap.min.js' %}"></script>
+
+    <!-- you need to include the shieldui css and js assets in order for the charts to work -->
+    <link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/light-bootstrap/all.min.css" />
+    <link id="gridcss" rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/dark-bootstrap/all.min.css" />
+
+    <script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
+    <script type="text/javascript" src="http://www.prepbootstrap.com/Content/js/gridData.js"></script>
+</head>
+<body>
+    <div id="wrapper">
+          <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">{{ProgramSession}}</a>
+            </div>
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul id="active" class="nav navbar-nav side-nav">
+                    <li class="selected"><a href="/Programs"><i class="fa fa-bullseye"></i> Dashboard</a></li>
+                    <li><a href="portfolio.html"><i class="fa fa-tasks"></i> Portfolio</a></li>
+                    <li><a href="blog.html"><i class="fa fa-globe"></i> Blog</a></li>
+                    <li><a href="signup.html"><i class="fa fa-list-ol"></i> SignUp</a></li>
+                    <li><a href="register.html"><i class="fa fa-font"></i> Register</a></li>
+                    <li><a href="timeline.html"><i class="fa fa-font"></i> Timeline</a></li>
+                    <li><a href="forms.html"><i class="fa fa-list-ol"></i> Forms</a></li>
+                    <li><a href="typography.html"><i class="fa fa-font"></i> Typography</a></li>
+                    <li><a href="bootstrap-elements.html"><i class="fa fa-list-ul"></i> Bootstrap Elements</a></li>
+                    <li><a href="bootstrap-grid.html"><i class="fa fa-table"></i> Bootstrap Grid</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right navbar-user">
+                    <li class="dropdown messages-dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> Messages <span class="badge">2</span> <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-header">2 New Messages</li>
+                            <li class="message-preview">
+                                <a href="#">
+                                    <span class="avatar"><i class="fa fa-bell"></i></span>
+                                    <span class="message">Security alert</span>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li class="message-preview">
+                                <a href="#">
+                                    <span class="avatar"><i class="fa fa-bell"></i></span>
+                                    <span class="message">Security alert</span>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="#">Go to Inbox <span class="badge">2</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown user-dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Steve Miller<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
+                            <li><a href="#"><i class="fa fa-gear"></i> Settings</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#"><i class="fa fa-power-off"></i> Log Out</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="divider-vertical"></li>
+                    <li>
+                        <form class="navbar-search">
+                            <input type="text" placeholder="Search" class="form-control">
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div id="page-wrapper">
+ 
+            <!-- Inputs form-->
+
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-rss"></i> Inputs</h3>
+                        </div>
+
+                        <form action="Calculate/" method="post">
+
+                        {% csrf_token %}
+
+                        <div class="panel-body">
+
+                            <section class="feed-item">
+                                <div class="form-group">
+                                    <label>Ke</label>
+                                    <input
+                                    class="form-control"
+                                    name="Ke"
+                                    value="{{ke}}">
+                                    <p class="help-block">Number of cells.</p>
+                                </div>
+                            </section>
+
+                            <section class="feed-item">
+                                <div class="form-group">
+                                    <label>T0</label>
+                                    <input
+                                    class="form-control"
+                                    name="T0"
+                                    value="{{t0}}">
+                                    <p class="help-block">Initial time.</p>
+                                </div>
+                            </section>
+
+                            <section class="feed-item">
+                                <div class="form-group">
+                                    <label>Spread</label>
+                                    <input
+                                    class="form-control" 
+                                    name="Spread"
+                                    value="{{spread}}">
+                                    <p class="help-block">Pulse spread.</p>
+                                </div>
+                            </section>
+
+                            <section class="feed-item">
+                                <div class="form-group">
+                                    <label>nsteps</label>
+                                    <input
+                                    class="form-control"
+                                    name="nsteps"
+                                    value="{{nsteps}}">
+                                    <p class="help-block">Number of steps.</p>
+                                </div>
+                            </section>
+
+                            <section class="feed-item">
+                                <div class="form-group">
+                                    <button
+                                    type="submit"
+                                    class="btn btn-primary">
+                                        Calculate!
+                                    </button>
+                                </div>
+                            </section>
+
+                        </form>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- /#Graphic -->
+
+                    <div class="col-md-10">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    <i class="fa fa-bar-chart-o"></i>
+                                    Ex for one dimensional FDTD simulation of a pulse in free space after T0 time steps.
+                                </h3>
+                            </div>
+
+                        <div class="panel-body">
+                            <div id="shieldui-chart1"></div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /#Graphic -->
+
+                    <div class="col-md-10">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    <i class="fa fa-bar-chart-o"></i>
+                                    Hy for one dimensional FDTD simulation of a pulse in free space after T0 time steps.
+                                </h3>
+                            </div>
+
+                        <div class="panel-body">
+                            <div id="shieldui-chart2"></div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /#Graphic -->
+
+            </div>
+
+        </div>
+    </div>
+    <!-- /#wrapper -->
+
+    <script type="text/javascript">
+        jQuery(function ($) {
+
+            $("#shieldui-chart1").shieldChart({
+                theme: "dark",
+
+                primaryHeader: {
+                    text: "FDTD cells"
+                },
+
+                exportOptions: {
+                    image: false,
+                    print: false
+                },
+
+                axisX: {
+                categoricalValues: {{x_axis}},
+                axisTickText: {enabled: false}
+                },
+
+                dataSeries: [{
+                    seriesType: "line",
+                    collectionAlias: "Normalized Ex",
+                    data: {{Ex}}
+                }]
+
+            });
+
+            $("#shieldui-chart2").shieldChart({
+                theme: "dark",
+
+                primaryHeader: {
+                    text: "FDTD cells"
+                },
+
+                exportOptions: {
+                    image: false,
+                    print: false
+                },
+
+                axisX: {
+                categoricalValues: {{x_axis}},
+                axisTickText: {step: {{ke}}/10},
+                max: {{ke}}
+                },
+
+                dataSeries: [{
+                    seriesType: "line",
+                    collectionAlias: "Normalized Hy",
+                    data: {{Hy}}
+                }]
+
+            });
+
+        });
+    </script>
+</body>
+</html> 
